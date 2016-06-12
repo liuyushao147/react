@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="js/react.js" type="text/javascript"></script>
+		<script src="js/react-dom.js" type="text/javascript"></script>
+		<script src="js/browser.min.js" type="text/javascript"></script>
+		<meta charset="utf-8" />
+		<title></title>
+		<style type="text/css">
+			.colorred{color: #f00;}
+		</style>
+	</head>
+	<body>
+		<div id="divdom"></div>
+		<!--
+			
+			createElement(type,[props],[children…]);在虚拟DOM上创建制定React元素;
+					参数：
+						type -- 此参数接受一个字符串 或 一个组件类 **** 当传入字符串时 必须是html标签;
+						props -- 可选参数  **** 用于制定当前元素的附加属性;
+						children -- 从此参数开始 后面的所有参数 都视为当前元素的子节点;
+						
+						
+			——html 标签：		
+			var ul = React.createElement(
+				"ul",null,
+				React.createElement("li",{className: "lastchild"},"firstchilde"),
+				React.createElement("li",null,"lasttchilde")
+			)
+			ReactDOM.render(
+				ul,
+				document.getElementById("divdom")
+			)
+			
+			——组件 ：
+			var Firstdom = React.createClass({
+				render: function(){
+					return React.createElement(
+						"div",null,
+						React.createElement("div",null,"111111"),
+						React.createElement("div",{className: "colorred"},"2222")
+					)
+				}
+			});
+			var firstelement = React.createElement(
+				Firstdom,null,
+				React.createElement("div",null,"3333333"),
+				React.createElement("div",null,"444444")
+			)
+			ReactDOM.render(
+				firstelement,
+				document.getElementById("divdom")
+			)
+			
+			render(element,container,[callback]);将虚拟DOM渲染到真是DOM上;
+					此方法是React最基本的方法，用于将指定模板插入到html中;
+					参数：
+						element --- 通过React创建的DOM  ****** 不是真实的DOM元素;
+						container --- 要放入的目标容器 ***** 真实的DOM元素;
+						callback  --- 此参数接收一个可选函数 **** 当渲染完成或被更改时执行;
+			
+			createClass(mate);实现预定义接口的JavaScript类
+					定义一个组件类;每个组件都要有自己的render();方法用于输出该组件 && 只能输出一个有效的React元素;
+					参数：
+						mate ----  实现预定义接口的JavaScript对象，用来 对React组件原型进行扩展;
+			
+			
+			
+			
+			ReactDOM.render(
+				<h1> holle,word! </h1>,
+				document.getElementById("divdom")
+			)
+		-->
+		
+		
+		<!--
+			
+			var dom = <ul>
+						<li className= "colorred">1111</li>
+						<li>1111</li>
+					  </ul>
+			ReactDOM.render(
+				dom,
+				document.getElementById("divdom")
+			)	
+			JSX语法 -- html与JS混写 但不用加任何引号！！
+				解析规则：
+					1> 遇到 “<”开头的以html解析
+					2> 遇到“{”开头的以JS解析
+					
+					
+			
+			var arr = ["你好","刘宇少"];
+			ReactDOM.render(
+				<h1> {arr} </h1>,
+				document.getElementById("divdom")
+			)
+			
+			
+			
+			jsx允许在JS中直接插入一个变量 ；如果变量是数组 则会直接展开数组
+			var arr = ["liuyushao","刘宇少"];
+			ReactDOM.render(
+				<div>
+					{
+						arr.map(function(main){
+							return <h1> holle, {main} </h1>
+						})
+					}
+				</div>,
+				document.getElementById("divdom")
+			)
+		-->
+		
+		
+		<!--
+			组件-- 就是一个 实现预定义接口的JavaScript类
+			createClass(mate) 
+			每个组件都有自己的render()；方法用于输出组件
+			
+			组件类的属性通过this.props获取；
+			组件变量开头必须大写  && 只能包含一个顶层标签
+			
+			
+			var Firstzujian = React.createClass({
+				render: function(){
+					return <h1> {this.props.name} </h1>
+				}
+			})
+			ReactDOM.render(
+				<Firstzujian name = "liuyushao" />,
+				document.getElementById("divdom")
+			)
+			
+			
+			this.props.children;
+						this.props对象的属性与组件的属性一一对应；但this.props.children除外;
+						它表示组件的所有节点；
+			
+			
+			var Flistchild = React.createClass({
+				render: function(){
+					return (
+						<ol>
+							{
+								React.Children.map(this.props.children,function(child){
+									return child
+								})
+							}
+						</ol>
+					)
+				}
+			})
+			ReactDOM.render(
+				<Flistchild>
+					<li>222</li>
+					<li>333333</li>
+				</Flistchild>,
+				document.getElementById("divdom")
+			)
+		-->
+		
+		
+		
+		
+		<!--
+			propTypes;组件属性 --- 接收任意值
+						用于验证组件的属性是否符合要求
+			
+			
+			var Firstname = React.createClass({
+				propTypes: {
+					name: React.PropTypes.number.isRequired,
+				},
+				render: function(){
+					return <h1> {this.props.name} </h1>
+				}
+			})
+			
+			var data = "1234";
+			ReactDOM.render(
+				<Firstname name = {data} />,
+				document.getElementById("divdom")
+			)
+			
+			
+			
+			getDefaultProps --- 设置属性默认值
+			
+			var Firstname = React.createClass({
+				getDefaultProps:function() {
+					return {
+						name : "123456789"
+					}
+				},
+				render: function(){
+					return <h1> {this.props.name} </h1>
+				}
+			})
+			
+			var data = "1234";
+			ReactDOM.render(
+				<Firstname/>,
+				document.getElementById("divdom")
+			)
+		-->
+		
+		
+		
+		
+		<!--
+			ref 获取真是的DOM节点;
+			
+			var Firstinout = React.createClass({
+				inpclick: function(){
+					alert(this.refs.myinpt.value);
+				},
+				render:function(){
+					return (
+						<div>
+							<input type="text" ref = "myinpt" value="this is alert value" />
+							<input type="button" value="click Me" onClick={this.inpclick} />
+						</div>
+					)
+				}
+			});
+			
+			ReactDOM.render(
+				<Firstinout />,
+				document.getElementById("divdom")
+			)
+		-->
+		
+		
+		<!--
+			setState 监听状态变化
+			getInitialState 设置状态值
+			
+			var Firststate = React.createClass({
+				getInitialState:function(){
+					return {name:false}
+				},
+				domclick:function(){
+					this.setState({name:!this.state.name})
+				},
+				render: function(){
+					var str = this.state.name?"111":"222222";
+					return (
+						<p onClick={this.domclick}>
+							lock hear {str}
+						</p>
+					)
+				}
+			});
+			ReactDOM.render(
+				<Firststate />,
+				document.getElementById("divdom")
+			)
+		-->
+		
+		<!--
+			
+			
+			var Firststates = React.createClass({
+				getInitialState: function(){
+					return {name:"123654"};
+				},
+				domclick:function(event){
+					this.setState({name:event.target.value});
+				},
+				render: function(){
+					var name = this.state.name;
+					return (
+						<div>
+							<input type="text" value = {name} onChange = {this.domclick} />
+							<p>{name}</p>
+						</div>
+					);
+				}
+			});
+			
+			ReactDOM.render(
+				<Firststates />,
+				document.getElementById("divdom")
+			)
+		-->
+		<script type="text/babel">
+			
+			
+	
+			
+			
+			
+			
+			
+			
+			
+			
+			
+		</script>
+	</body>
+</html>
